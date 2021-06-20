@@ -1,0 +1,6 @@
+[vagrant:vars]
+ansible_ssh_user=vagrant
+
+[vagrant]
+centos ansible_host=192.168.33.10
+ubuntu ansible_host=192.168.33.11

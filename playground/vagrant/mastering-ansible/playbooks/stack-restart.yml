@@ -1,0 +1,68 @@
+---
+# Bring stack down
+- name: "Stop load balancer"
+  hosts: loadbalancer
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Stop nginx
+      service: 
+        name: nginx
+        state: stopped
+    - name: Wait until nginx stops
+      wait_for: 
+        port: 80
+        state: drained
+
+- name: "Stop webservers"
+  hosts: webserver
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Stop apache
+      service:
+        name: apache2
+        state: stopped
+    - name: Wait until apache2 stops
+      wait_for: 
+        port: 80
+        state: stopped
+
+# Restart MySQL
+- name: "Restart MySQL"
+  hosts: database
+  become: true
+  tasks:
+    - name: Restart MySQL
+      service: 
+        name: mysql
+        state: restarted
+    - name: Wait until MySQL restarts
+      wait_for: 
+        port: 3306
+        state: started
+        
+# Bring stack up
+- name: "Start apache2 webserver"
+  hosts: webserver
+  become: true
+  tasks:
+    - name: Start apache2
+      service:
+        name: apache2
+        state: started
+    - name: Wait until apache2 starts
+      wait_for: 
+        port: 80
+        
+- name: "Start load balancer"
+  hosts: loadbalancer
+  become: true
+  tasks:
+    - name: Start nginx
+      service:
+        name: nginx
+        state: started
+    - name: Wait until nginx starts
+      wait_for: 
+        port: 80

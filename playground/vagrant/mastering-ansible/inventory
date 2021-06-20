@@ -1,0 +1,17 @@
+[all:vars]
+ansible_user=root 
+ansible_ssh_pass=Passw0rd
+
+[loadbalancer]
+lb01
+
+[webserver]
+app01
+app02
+
+[database]
+db01
+
+[control]
+; manage ansible control machine with ansible, after installing ansible. hence the 'local'.
+control01 ansible_connection=local
