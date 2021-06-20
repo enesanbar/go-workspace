@@ -1,0 +1,70 @@
+---
+- name: Install tools
+  apt:
+    state: present
+    name:
+      - python-httplib2
+  tags: ['packages']
+
+- name: Install nginx
+  apt:
+    state: present
+    name:
+      - nginx
+  tags: ['packages']
+
+- name: Create SSL directory
+  file: 
+    path: /etc/nginx/ssl
+    state: directory
+  tags: ['configure']
+
+- name: Copy SSL certificates
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - src: self.key
+      dest: /etc/nginx/ssl/self.key
+    - src: self.crt
+      dest: /etc/nginx/ssl/self.crt
+  tags: ['configure']    
+   
+- name: Configure nginx sites
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/sites-available/{{ item.key }}
+    mode: 0644
+  with_dict: "{{ sites }}"
+  tags: ['configure']
+
+- name: get active sites
+  shell: ls -1 /etc/nginx/sites-enabled
+  register: active
+  changed_when: "active.stdout_lines != sites.keys()"
+  tags: ['configure']
+
+- name: deactivate sites
+  file:
+    path: /etc/nginx/sites-enabled/{{ item }}
+    state: absent
+  with_items: "{{ active.stdout_lines }}"
+  when: item not in sites
+  notify: restart nginx
+  tags: ['configure']
+
+- name: activate nginx sites
+  file:
+    src: /etc/nginx/sites-available/{{ item.key }}
+    dest: /etc/nginx/sites-enabled/{{ item.key }}
+    state: link
+  notify: restart nginx
+  with_dict: "{{ sites }}"
+  tags: ['configure']
+
+- name: Ensure nginx started
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+  tags: ['system']

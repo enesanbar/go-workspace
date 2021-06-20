@@ -1,0 +1,20 @@
+groups:
+  - name: RED Metrics
+    rules:
+      - record: job:http_response_latency_seconds:rate1m
+        expr: rate(http_response_latency_seconds_sum[1m]) / rate(http_response_latency_seconds_count[1m])
+
+      - alert: HttpLatencyAbove5sec
+        expr: job:http_response_latency_seconds:rate1m > 5
+        for: 1m
+        labels:
+          severity: critical
+
+      - alert: HttpLatencyAbove2sec
+        expr: 2 < job:http_response_latency_seconds:rate1m < 5
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'HTTP latency is over 2 seconds'
+          description: 'HTTP latency of instance {{ $labels.instance }} of job {{ $labels.job }} is {{ $value | printf "%.2f" }}'

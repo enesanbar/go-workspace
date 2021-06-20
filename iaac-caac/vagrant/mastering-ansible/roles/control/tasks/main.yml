@@ -1,0 +1,8 @@
+---
+- name: Install tools
+  apt:
+    state: present
+    name:
+      - curl
+      - python-httplib2
+  tags: ['packages']

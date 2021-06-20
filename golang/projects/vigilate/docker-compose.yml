@@ -1,0 +1,41 @@
+version: '3.4'
+
+services:
+  vigilate:
+    build:
+      context: .
+    ports:
+      - "4000:4000"
+    entrypoint: ["/app"]
+    environment:
+      GO_MOVIES_JWT: 2dce505d96a53c5768052ee90f3df2055657518dad489160df9913f66042e160
+    command: "--production=true --dbhost=postgres --dbport=5432 -dbuser='postgres' --dbpass password --dbname postgres -pusherHost='pusher.com' -pusherKey='abc123' -pusherSecret='123abc' -pusherApp='1' -pusherPort='4001' -pusherSecure=false"
+    depends_on:
+      postgres:
+        condition: service_healthy
+  ipe:
+    build:
+      context: ipe
+    ports:
+      - "4001:4001"
+
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mailhog:
+    image: mailhog/mailhog
+    restart: always
+    ports:
+      - "1025:1025"
+      - "8025:8025"

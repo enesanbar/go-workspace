@@ -1,0 +1,30 @@
+version: '3.0'
+
+services:
+  api:
+    build:
+      context: api
+      dockerfile: Dockerfile.dev
+    ports:
+    - "3001:3001"
+    volumes:
+    - ${PWD}/api/:/usr/src/app/
+
+  client:
+    build:
+      context: client
+      dockerfile: Dockerfile.dev
+    ports:
+    - "3000:3000"
+    volumes:
+    - ${PWD}/client/:/usr/src/app/
+  
+  rtmpserver:
+    build:
+      context: rtmpserver
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8000:8000"
+    volumes: 
+    - ${PWD}/rtmpserver/:/usr/src/app/
+

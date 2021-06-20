@@ -1,0 +1,55 @@
+version: '2'
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: compose/local/django/Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/app
+    environment:
+      DJANGO_SETTINGS_MODULE: "config.settings.local"
+      PYTHONOPTIMIZE: "1"
+    command: /start.sh
+
+  redis:
+    image: redis
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  celery-worker:
+    build:
+      context: .
+      dockerfile: compose/local/django/Dockerfile
+    volumes:
+      - ./src:/app
+    command: /start-celeryworker.sh
+
+  celery-beat:
+    build:
+      context: .
+      dockerfile: compose/local/django/Dockerfile
+    volumes:
+      - ./src:/app
+    command: /start-celerybeat.sh
+
+  flower:
+    build:
+      context: .
+      dockerfile: compose/local/django/Dockerfile
+    volumes:
+      - ./src:/app
+    command: /start-celeryflower.sh
+    ports:
+      - "5555:5555"
+
+  memcached:
+    image: memcached
+    ports:
+      - "11211:11211"

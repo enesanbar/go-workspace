@@ -1,0 +1,48 @@
+---
+- name: Install Web Componentts
+  apt:
+    name:
+      - python-pip
+      - python-virtualenv
+      - python-mysqldb
+    state: present
+  tags: ['packages']
+
+- name: Copy demo app source
+  copy:
+    src: demo/app/
+    dest: /var/www/demo
+    mode: 0755
+  notify: restart apache2
+  tags: ['configure']
+
+- name: Copy demo.wsgi
+  template:
+    src: demo.wsgi.j2
+    dest: /var/www/demo/demo.wsgi
+    mode: 0755
+  notify: restart apache2
+  tags: ['configure']
+
+- name: Copy apache virtual host config
+  copy:
+    src: demo/demo.conf
+    dest: /etc/apache2/sites-available
+    mode: 0755
+  notify: restart apache2
+  tags: ['configure']
+
+- name: Install application dependencies
+  pip:
+    requirements: /var/www/demo/requirements.txt
+    virtualenv: /var/www/demo/.venv
+  notify: restart apache2
+  tags: ['system']
+
+- name: activate demo apache site
+  file:
+    src: /etc/apache2/sites-available/demo.conf
+    dest: /etc/apache2/sites-enabled/demo.conf
+    state: link
+  notify: restart apache2
+  tags: ['configure']

@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+  bookings:
+    image: bookings
+    build:
+      context: .
+      dockerfile: ./deployment/bookings/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+    command: ["-dbhost", "postgres", "-dbname", "bookings", "-dbuser", "bookings", "-dbpass", "password", "production", "false"]
+  server:
+    image: caddy:2.4.3-alpine
+    volumes: 
+      - ${PWD}/deployment/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - ${PWD}/deployment/caddy/bookings.conf:/etc/caddy/conf.d/bookings.conf
+    ports:
+      - "8081:80"
+      - "8443:443"
+    depends_on:
+      - bookings
+
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: bookings
+      POSTGRES_PASSWORD: password
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5

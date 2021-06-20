@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  nginx:
+    container_name: nginx
+    image: nginx:1.17-alpine
+    volumes:
+      - ${PWD}/conf.d/default.conf:/etc/nginx/nginx.conf
+      - ${PWD}/html:/usr/share/nginx/html
+    ports:
+    - "80:80"
+

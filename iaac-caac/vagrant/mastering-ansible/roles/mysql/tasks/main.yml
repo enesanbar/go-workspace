@@ -1,0 +1,46 @@
+---
+- name: Install tools
+  apt:
+    state: present
+    name:
+      - python-mysqldb
+  tags: ['packages']
+
+- name: Install MySQL
+  apt:
+    state: present
+    name:
+      - mysql-server
+  tags: ['packages']
+
+- name: Ensure MySQL listening on all ports
+  lineinfile:
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+    regexp: ^bind-address
+    line: "bind-address = 0.0.0.0"
+  notify: restart mysql
+  tags: ['configure']
+
+- name: Ensure mysql started
+  service:
+    name: mysql
+    state: started
+    enabled: yes
+  tags: ['system']
+
+- name: create database
+  mysql_db:
+    name: "{{ db_name }}"
+    state: present
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  tags: ['configure']
+
+- name: create demo user
+  mysql_user:
+    name: "{{ db_user_name }}"
+    password: "{{ db_user_password }}"
+    priv: "{{ db_name }}.*:ALL"
+    host: "{{ db_user_host }}"
+    state: present
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  tags: ['configure']

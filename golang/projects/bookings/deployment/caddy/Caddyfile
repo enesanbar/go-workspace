@@ -1,0 +1,24 @@
+{
+	email admin@here.com
+}
+
+(static) {
+	@static {
+		file
+		path *.ico *.css *.js *.git *.jpg *.jpeg *.png *.svg *.woff *.json
+	}
+	header @static Cache-Control max-age=5184000
+}
+
+# (security) {
+# 	header {
+# 		# enable HSTS (forces browser to use SSL certificate
+# 		Strict-Transport-Security max-age=31536000;
+# 		# disable clients from sniffing media type
+# 		X-Content-Type-Options nosniff
+# 		# keep referer data off of HTTP connection
+# 		Referrer-Policy no-referrer-when-downgrade
+# 	}
+# }
+
+import conf.d/*.conf

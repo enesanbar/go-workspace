@@ -1,0 +1,214 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-28 18:18+0000\n"
+"PO-Revision-Date: 2017-08-29 07:29+0000\n"
+"Last-Translator: b'  <enesanbar@gmail.com>'\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Translated-Using: django-rosetta 0.7.13\n"
+
+#: account/templates/base.html:15
+msgid "My dashboard"
+msgstr "Profilim"
+
+#: account/templates/base.html:18
+msgid "Images"
+msgstr "Resimler"
+
+#: account/templates/base.html:21
+msgid "People"
+msgstr "Kullanıcılar"
+
+#: account/templates/base.html:29
+msgid "Logout"
+msgstr "Çıkış"
+
+#: account/templates/base.html:31
+msgid "Log-in"
+msgstr "Giriş Yap"
+
+#: account/urls.py:11
+msgid "users/"
+msgstr "kullanicilar/"
+
+#: account/urls.py:12
+msgid "users/follow/"
+msgstr "kullanicilar/takip/"
+
+#: account/urls.py:13
+msgid "users/<slug:username>/"
+msgstr "kullanicilar/<slug:username>/"
+
+#: account/urls.py:15
+msgid "register/"
+msgstr "kayit/"
+
+#: account/urls.py:16
+msgid "login/"
+msgstr "giris/"
+
+#: account/urls.py:17
+msgid "logout/"
+msgstr "cikis/"
+
+#: account/urls.py:18
+msgid "dashboard/"
+msgstr "profil/"
+
+#: account/urls.py:19
+msgid "edit/"
+msgstr "duzenle/"
+
+#: account/urls.py:22
+msgid "password-change/"
+msgstr "sifre-degisimi/"
+
+#: account/urls.py:23
+msgid "password-change/done/"
+msgstr "sifre-degisimi/tamamlandi/"
+
+#: account/urls.py:26
+msgid "password-reset/"
+msgstr "sifre-sifirlama/"
+
+#: account/urls.py:27
+msgid "password-reset/done/"
+msgstr "sifre-sifirlama/tamamlandi/"
+
+#: account/urls.py:28
+msgid "password-reset/confirm/<slug:uidb64>/<slug:token>/"
+msgstr "sifre-sifirlama/onay/<slug:uidb64>/<slug:token>/"
+
+#: account/urls.py:29
+msgid "password-reset/complete/"
+msgstr "sifre-sifirlama/tamamlandi/"
+
+#: cart/forms.py:11
+msgid "Quantity"
+msgstr "Miktar"
+
+#: cart/urls.py:10
+msgid "add/<int:product_id>/"
+msgstr "ekle/<int:product_id>/"
+
+#: cart/urls.py:11
+msgid "remove/<int:product_id>/"
+msgstr "^cikar/<int:product_id>/"
+
+#: config/settings/base.py:113
+msgid "English"
+msgstr "İngilizce"
+
+#: config/settings/base.py:114
+msgid "Spanish"
+msgstr "İspanyolca"
+
+#: config/settings/base.py:115
+msgid "Turkish"
+msgstr "Türkçe"
+
+#: config/urls.py:18
+msgid "account/"
+msgstr "hesap/"
+
+#: config/urls.py:19
+msgid "blog/"
+msgstr "blog/"
+
+#: config/urls.py:20
+msgid "images/"
+msgstr "resimler/"
+
+#: config/urls.py:21
+msgid "shop/"
+msgstr "magaza/"
+
+#: config/urls.py:22
+msgid "cart/"
+msgstr "sepet/"
+
+#: config/urls.py:23
+msgid "orders/"
+msgstr "siparisler/"
+
+#: config/urls.py:24
+#, fuzzy
+#| msgid "^coupons/"
+msgid "coupons/"
+msgstr "kuponlar"
+
+#: config/urls.py:25
+msgid "courses/"
+msgstr "kuponlar"
+
+#: coupons/forms.py:6
+msgid "Coupon"
+msgstr "Kupon"
+
+#: images/templates/images/image/detail.html:21
+#: images/templates/images/image/detail.html:60
+msgid "Like"
+msgstr "Beğen"
+
+#: images/templates/images/image/detail.html:23
+#: images/templates/images/image/detail.html:60
+msgid "Unlike"
+msgstr "Geri Al"
+
+#: images/templates/images/image/detail.html:36
+msgid "Nobody likes this image yet."
+msgstr "Henüz kimse bu resmi beğenmedi."
+
+#: images/urls.py:10
+msgid "create/"
+msgstr "olustur/"
+
+#: images/urls.py:11
+msgid "detail/<int:id>/<slug:slug>/"
+msgstr "detaylar/<int:id>/<slug:slug>/"
+
+#: shop/templates/shop/base.html:8 shop/templates/shop/base.html:13
+msgid "My shop"
+msgstr "Mağazam"
+
+#: shop/templates/shop/base.html:20
+msgid "Your cart"
+msgstr "Sepetiniz"
+
+#: shop/templates/shop/base.html:27
+msgid "Your cart is empty."
+msgstr "Sepetiniz Boş"
+
+#: shop/templates/shop/product/detail.html:6
+#: shop/templates/shop/product/list.html:6
+#: shop/templates/shop/product/list.html:24
+msgid "Products"
+msgstr "Ürünler"
+
+#: shop/templates/shop/product/detail.html:18
+msgid "Add to cart"
+msgstr "Sepete ekle"
+
+#: shop/templates/shop/product/list.html:11
+msgid "Categories"
+msgstr "Kategoriler"
+
+#: shop/templates/shop/product/list.html:14
+msgid "All"
+msgstr "Hepsi"
+
+#: templates/language_swither.html:7
+msgid "Language"
+msgstr "Dil"

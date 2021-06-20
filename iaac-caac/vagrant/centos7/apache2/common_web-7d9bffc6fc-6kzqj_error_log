@@ -1,0 +1,49 @@
+[Tue Nov 03 15:26:33.517282 2020] [core:warn] [pid 41:tid 140508229999944] AH00117: Ignoring deprecated use of DefaultType in line 445 of /etc/apache2/httpd.conf.
+[Tue Nov 03 15:26:33.519325 2020] [lbmethod_heartbeat:notice] [pid 41:tid 140508229999944] AH02282: No slotmem from mod_heartmonitor
+[Tue Nov 03 15:26:33.522137 2020] [mpm_event:notice] [pid 41:tid 140508229999944] AH00489: Apache/2.4.46 (Unix) configured -- resuming normal operations
+[Tue Nov 03 15:26:33.522261 2020] [core:notice] [pid 41:tid 140508229999944] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Tue Nov 03 15:27:13.132935 2020] [authz_core:error] [pid 42:tid 140508225424160] [client 10.35.101.141:58320] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 15:36:29.861439 2020] [authz_core:error] [pid 42:tid 140508215962400] [client 10.35.101.141:44526] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 15:46:29.955169 2020] [authz_core:error] [pid 42:tid 140508222556960] [client 10.35.101.141:60154] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 15:56:29.943846 2020] [authz_core:error] [pid 42:tid 140508218256160] [client 10.35.101.141:47552] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 16:06:30.195965 2020] [authz_core:error] [pid 42:tid 140508215675680] [client 10.35.101.141:34722] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 16:16:30.164619 2020] [authz_core:error] [pid 43:tid 140508225280800] [client 10.35.101.141:50194] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 16:26:30.322068 2020] [authz_core:error] [pid 42:tid 140508221123360] [client 10.35.101.141:37352] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 16:36:30.195930 2020] [authz_core:error] [pid 42:tid 140508218829600] [client 10.35.101.141:52810] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 16:46:30.136216 2020] [authz_core:error] [pid 43:tid 140508223847200] [client 10.35.101.141:39992] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 16:56:30.212293 2020] [authz_core:error] [pid 42:tid 140508225137440] [client 10.35.101.141:55466] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 17:05:56.294981 2020] [authz_core:error] [pid 42:tid 140508221840160] [client 10.35.101.141:41764] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 17:15:56.348347 2020] [authz_core:error] [pid 42:tid 140508219546400] [client 10.35.101.141:57164] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 17:25:50.401873 2020] [authz_core:error] [pid 43:tid 140508219833120] [client 10.35.101.141:44098] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 17:35:49.933577 2020] [authz_core:error] [pid 42:tid 140508224277280] [client 10.35.101.141:59666] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 17:45:49.987762 2020] [authz_core:error] [pid 43:tid 140508218112800] [client 10.35.101.141:46852] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 17:55:49.778894 2020] [authz_core:error] [pid 42:tid 140508219976480] [client 10.35.101.141:34136] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 18:05:21.977509 2020] [authz_core:error] [pid 43:tid 140508223273760] [client 10.35.101.141:49272] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 18:15:22.176374 2020] [authz_core:error] [pid 42:tid 140508215962400] [client 10.35.101.141:37158] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 18:25:22.090018 2020] [authz_core:error] [pid 43:tid 140508219546400] [client 10.35.101.141:53152] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 18:35:22.007544 2020] [authz_core:error] [pid 42:tid 140508221410080] [client 10.35.101.141:40982] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 18:45:22.112115 2020] [authz_core:error] [pid 42:tid 140508217396000] [client 10.35.101.141:56734] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 18:55:21.867244 2020] [authz_core:error] [pid 42:tid 140508221696800] [client 10.35.101.141:44260] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 19:05:22.227956 2020] [authz_core:error] [pid 42:tid 140508218112800] [client 10.35.101.141:60372] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 19:15:22.144984 2020] [authz_core:error] [pid 42:tid 140508215245600] [client 10.35.101.141:48066] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 19:25:22.353236 2020] [authz_core:error] [pid 42:tid 140508222700320] [client 10.35.101.141:35828] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 19:35:22.269263 2020] [authz_core:error] [pid 43:tid 140508220980000] [client 10.35.101.141:51940] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 19:45:22.226692 2020] [authz_core:error] [pid 42:tid 140508216392480] [client 10.35.101.141:39602] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 19:55:22.055440 2020] [authz_core:error] [pid 42:tid 140508222987040] [client 10.35.101.141:55516] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 20:06:12.879377 2020] [authz_core:error] [pid 42:tid 140508221266720] [client 10.35.101.141:43392] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 20:16:12.506590 2020] [authz_core:error] [pid 42:tid 140508220693280] [client 10.35.101.141:59326] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 20:26:12.863241 2020] [authz_core:error] [pid 42:tid 140508218686240] [client 10.35.101.141:46794] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 20:36:12.785035 2020] [authz_core:error] [pid 42:tid 140508217539360] [client 10.35.101.141:34522] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 20:46:12.722050 2020] [authz_core:error] [pid 42:tid 140508225137440] [client 10.35.101.141:50344] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 20:56:12.738022 2020] [authz_core:error] [pid 42:tid 140508225137440] [client 10.35.101.141:38072] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 21:06:12.637512 2020] [authz_core:error] [pid 42:tid 140508223990560] [client 10.35.101.141:54064] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 21:16:12.773408 2020] [authz_core:error] [pid 43:tid 140508217826080] [client 10.35.101.141:41700] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 21:26:12.696346 2020] [authz_core:error] [pid 42:tid 140508219833120] [client 10.35.101.141:57228] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 21:36:06.524145 2020] [authz_core:error] [pid 42:tid 140508217539360] [client 10.35.101.141:44738] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 21:46:06.755145 2020] [authz_core:error] [pid 42:tid 140508223417120] [client 10.35.101.141:60338] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 21:56:06.430753 2020] [authz_core:error] [pid 42:tid 140508220980000] [client 10.35.101.141:47694] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 22:06:06.626811 2020] [authz_core:error] [pid 42:tid 140508218686240] [client 10.35.101.141:35158] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 22:16:06.549064 2020] [authz_core:error] [pid 42:tid 140508215532320] [client 10.35.101.141:50694] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 22:26:06.668378 2020] [authz_core:error] [pid 42:tid 140508220693280] [client 10.35.101.141:37882] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 22:36:06.692991 2020] [authz_core:error] [pid 42:tid 140508216965920] [client 10.35.101.141:53542] AH01630: client denied by server configuration: /var/www/html/public/server-status
+[Tue Nov 03 22:46:06.726934 2020] [authz_core:error] [pid 43:tid 140508225424160] [client 10.35.101.141:40862] AH01630: client denied by server configuration: /var/www/html/public/server-status

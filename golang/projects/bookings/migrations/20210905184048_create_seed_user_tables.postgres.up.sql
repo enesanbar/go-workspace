@@ -1,0 +1,1 @@
+INSERT INTO public.users (first_name, last_name, email, password, access_level, created_at, updated_at) VALUES ('Enes', 'Anbar', 'enesanbar@gmail.com', '$2a$12$ujuW3eYQmtbkOeeroM2ThueqBos1LrUBDOwOgPqUmqZteOw/I0jZu', 3, '2021-09-04 14:28:17.000000', '2021-09-04 14:28:19.000000');

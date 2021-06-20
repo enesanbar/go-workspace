@@ -1,0 +1,2 @@
+INSERT INTO public.rooms (room_name, created_at, updated_at) VALUES ('General''s Quarters', '2021-09-02 00:00:00.000000', '2021-09-02 00:00:00.000000');
+INSERT INTO public.rooms (room_name, created_at, updated_at) VALUES ('Major''s Suite', '2021-09-03 11:24:23.000000', '2021-09-03 11:24:28.000000');

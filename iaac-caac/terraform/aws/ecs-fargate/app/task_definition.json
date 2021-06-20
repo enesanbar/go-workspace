@@ -1,0 +1,28 @@
+[
+  {
+    "name": "${task_definition_name}",
+    "image": "${docker_image_repo}",
+    "essential": true,
+    "environment": [
+      {
+        "name": "app_name",
+        "value": "${app_name}"
+      }
+    ],
+    "portMappings": [
+      {
+        "container_port": "${docker_container_port}",
+      }
+    ],
+    "cpu": "${docker_cpu}",
+    "memory": "${docker_memory}",
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "${ecs_service_name}-LogGroup",
+        "awslogs-region": "${region}",
+        "awslogs-stream-prefix": "${ecs_service_name}-LogGroup-stream"
+      }
+    }
+  }
+]

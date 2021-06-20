@@ -1,0 +1,35 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -f client/Dockerfile.dev -t enesanbar/react-test client
+
+script:
+  - docker run enesanbar/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t enesanbar/multi-client client
+  - docker build -t enesanbar/multi-nginx nginx
+  - docker build -t enesanbar/multi-server server
+  - docker build -t enesanbar/multi-worker worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push enesanbar/multi-client client
+  - docker push enesanbar/multi-nginx nginx
+  - docker push enesanbar/multi-server server
+  - docker push enesanbar/multi-worker worker
+
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-west-2"
+  app: "multi-docker"
+  env: "MultiDocker-env"
+  bucket_name: ""
+  bucket_path: "docker-multi"
+  on:
+    branch: master
+  access_key_id: "$AWS_ACCESS_KEY" # Comes from travis-ci env variables
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY" # Comes from travis-ci env variables

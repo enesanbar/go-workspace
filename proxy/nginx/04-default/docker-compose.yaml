@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+  nginx:
+    container_name: nginx
+    image: nginx:1.19-alpine
+    volumes:
+      - ${PWD}/conf/default.conf:/etc/nginx/default.conf
+      - ${PWD}/conf/mime.types:/etc/nginx/mime.types
+      - ${PWD}/conf/conf.d/:/etc/nginx/conf.d/
+      - ${PWD}/conf/ssl/:/etc/nginx/ssl/
+      - ${PWD}/html:/usr/share/nginx/html
+      - ${PWD}/logs/:/var/log/nginx/
+    ports:
+    - "80:80"
+    - "8081:81"
+    - "8083:83"
+    

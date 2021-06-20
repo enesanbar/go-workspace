@@ -1,0 +1,98 @@
+---
+- hosts: loadbalancer
+  become: true
+  gather_facts: false
+  tasks:
+    - name: verify nginx service
+      command: service nginx status
+      changed_when: false
+
+    - name: verify nginx is listening on 80
+      wait_for:
+        port: 80
+        timeout: 1
+
+- hosts: webserver
+  become: true
+  gather_facts: false
+  tasks:
+    - name: verify apache2 service
+      command: service apache2 status
+      changed_when: false
+
+    - name: verify apache2 is listening on 80
+      wait_for:
+        port: 80
+        timeout: 1
+
+- hosts: database
+  become: true
+  gather_facts: false
+  tasks:
+    - name: verify mysql service
+      command: service mysql status
+      changed_when: false
+
+    - name: verify mysql is listening on 3306
+      wait_for:
+        port: 3306
+        timeout: 1
+
+- hosts: control
+  become: true
+  gather_facts: false
+  tasks:
+    - name: verify e2e response
+      uri:
+        url: http://{{ item }}
+        return_content: yes
+      with_items: "{{ groups.loadbalancer }}"
+      register: lb_index
+    
+    - debug: msg="{{lb_index}}"
+
+    - name: Check response
+      fail:
+        msg: "index failed to return content"
+      when: '"Hello, from sunny" not in item.content'
+      with_items: "{{ lb_index.results }}"
+
+    - name: verify e2e db response
+      uri:
+        url: http://{{ item }}/db
+        return_content: yes
+      with_items: "{{ groups.loadbalancer }}"
+      register: db_index
+      
+    - name: Check response
+      fail:
+        msg: "index failed to return content"
+      when: '"Database Connected from" not in item.content'
+      with_items: "{{ db_index.results }}"
+- hosts: loadbalancer
+  tasks:
+    - name: verify backend response
+      uri:
+        url: http://{{ item }}
+        return_content: yes
+      with_items: "{{ groups.webserver }}"
+      register: app_index
+
+    - name: Check response
+      fail:
+        msg: "index failed to return content"
+      when: '"Hello, from sunny {{ item.item }}!" not in item.content'
+      with_items: "{{ app_index.results }}"
+
+    - name: verify backend db response
+      uri:
+        url: http://{{ item }}/db
+        return_content: yes
+      with_items: "{{ groups.webserver }}"
+      register: app_db
+
+    - name: Check response
+      fail:
+        msg: "index failed to return content"
+      when: '"Database Connected from {{ item.item }}!" not in item.content'
+      with_items: "{{ app_db.results }}"

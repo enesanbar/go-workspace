@@ -1,0 +1,39 @@
+---
+- hosts: all
+  become: True
+  tasks:
+    - name: Upgrade all packages to their latest version
+      apt:
+        name: "*"
+        state: latest
+
+    - name: Install system utilities
+      apt:
+        pkg: 
+        - htop
+        - atop
+        - procps
+        state: present
+    
+- name: Install SAR (System Activity Report)
+  hosts: all
+  become: True
+  gather_facts: False
+  tasks:
+    - name: Install sysstat package
+      apt:
+        name: sysstat
+        state: present
+
+    - name: Enable sysstat in config file
+      lineinfile:
+        path: /etc/default/sysstat
+        regexp: '^ENABLED='
+        line: 'ENABLED="true"'
+
+    - name: Enable sysstat service
+      service:
+        name: sysstat
+        enabled: True
+        state: restarted
+

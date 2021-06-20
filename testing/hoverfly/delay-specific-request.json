@@ -1,0 +1,55 @@
+{
+	"data": {
+		"pairs": [
+			{
+				"request": {
+					"path": [
+						{
+							"matcher": "exact",
+							"value": "/"
+						}
+					],
+					"method": [
+						{
+							"matcher": "exact",
+							"value": "GET"
+						}
+					],
+					"destination": [
+						{
+							"matcher": "exact",
+							"value": "date.jsontest.com"
+						}
+					],
+					"scheme": [
+						{
+							"matcher": "exact",
+							"value": "http"
+						}
+					],
+					"body": [
+						{
+							"matcher": "exact",
+							"value": ""
+						}
+					]
+				},
+				"response": {
+					"status": 200,
+					"body": "{\n   \"date\": \"04-08-2022\",\n   \"milliseconds_since_epoch\": 1649410943096,\n   \"time\": \"09:42:23 AM\"\n}\n",
+					"logNormalDelay": {
+						"min": 100,
+						"max": 10000,
+						"mean": 5000,
+						"median": 500
+					}
+				}
+			}
+		]
+	},
+	"meta": {
+		"schemaVersion": "v5.1",
+		"hoverflyVersion": "v1.3.6",
+		"timeExported": "2022-04-08T12:43:20+03:00"
+	}
+}

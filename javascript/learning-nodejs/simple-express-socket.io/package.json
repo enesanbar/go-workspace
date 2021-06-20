@@ -1,0 +1,23 @@
+{
+  "name": "expressjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.3.14",
+    "nodemon": "^1.18.7",
+    "socket.io": "^2.1.1"
+  },
+  "devDependencies": {
+    "jasmine": "^3.3.0",
+    "request": "^2.88.0"
+  }
+}

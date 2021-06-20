@@ -1,0 +1,35 @@
+{
+  "applications": [
+    {
+      "group": "papi",
+      "name": "search-aggregation",
+      "id": 1
+    },
+    {
+      "group": "papi",
+      "name": "merchandising-aggregation",
+      "id": 2
+    },
+    {
+      "group": "papi",
+      "name": "catalog-aggregation",
+      "id": 3
+    },
+    {
+      "group": "papi",
+      "name": "user-aggregation",
+      "id": 4
+    },
+    {
+      "group": "papi",
+      "name": "product-aggregation",
+      "id": 5
+    },
+    {
+      "group": "gg",
+      "name": "zf",
+      "dependencies": [1, 2, 3, 4, 5],
+      "id": 6
+    }
+  ]
+}

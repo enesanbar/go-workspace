@@ -1,0 +1,77 @@
+---
+- hosts: all
+  become: True
+  tasks:
+    - name: Upgrade all packages to their latest version
+      yum:
+        name: "*"
+        state: latest
+        update_cache: yes
+    - name: Install system utilities
+      yum:
+        state: present
+        name: 
+        - htop
+        - atop
+        - procps
+        - epel-release
+        - tree
+        - vim-enhanced
+        - logwatch
+    
+- name: Install SAR (System Activity Report)
+  hosts: all
+  become: True
+  gather_facts: False
+  tasks:
+    - name: Install sysstat package
+      yum:
+        name: sysstat
+        state: present
+
+    # - name: Enable sysstat in config file
+    #   lineinfile:
+    #     path: /etc/default/sysstat
+    #     regexp: '^ENABLED='
+    #     line: 'ENABLED="true"'
+
+    - name: Enable sysstat service
+      service:
+        name: sysstat
+        enabled: True
+        state: restarted
+
+- name: Install docker
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install packages required by docker device mapper
+      yum:
+        name:
+          - yum-utils
+          - device-mapper-persistent-data
+          - lvm2
+        state: present
+
+    - name: Add stable docker repository
+      command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+    - name: Install docker and containerd
+      yum:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+
+    - name: Ensure docker service is started and enabled
+      service: 
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Add user vagrant to docker group
+      user:
+        name: vagrant
+        groups: docker
+        append: yes

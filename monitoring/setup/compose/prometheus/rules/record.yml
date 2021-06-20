@@ -1,0 +1,15 @@
+groups:
+  - name: http recording rules
+    rules:
+      - record: job:http_inprogress_requests:sum
+        expr: sum by (job) (http_inprogress_requests)
+
+  - name: node recording rules
+    rules:
+      # average time that all cpu spend on idle mode
+      - record: job:node_cpu_seconds:avg_idle
+        expr: avg without(cpu)(rate(node_cpu_seconds_total{mode="idle"}[5m]))
+
+      # average time that all cpu spend on idle mode
+      - record: job:node_cpu_seconds:avg_not_idle
+        expr: avg without(cpu, mode)(rate(node_cpu_seconds_total{mode!="idle"}[5m]))

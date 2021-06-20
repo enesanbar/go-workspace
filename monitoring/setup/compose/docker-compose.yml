@@ -1,0 +1,187 @@
+version: '3'
+
+services:
+  alertmanager:
+    image: prom/alertmanager
+    container_name: alertmanager
+    volumes:
+      - ${PWD}/alertmanager/data:/alertmanager
+      - ${PWD}/alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+      - ${PWD}/alertmanager/slack-template.tmpl:/etc/alertmanager/templates/slack-template.tmpl
+    ports:
+      - "9093:9093"
+    networks:
+      - monitoring
+
+  pushgateway:
+    image: prom/pushgateway
+    container_name: pushgateway
+#    volumes:
+#      - ${PWD}/alertmanager/slack-template.tmpl:/etc/alertmanager/templates/slack-template.tmpl
+    ports:
+      - "9091:9091"
+    networks:
+      - monitoring
+
+  node-exporter:
+    image: prom/node-exporter
+    container_name: node-exporter
+    ports:
+      - "9100:9100"
+    networks:
+      - monitoring
+
+  blackbox-exporter:
+    image: prom/blackbox-exporter
+    container_name: black-exporter
+    volumes:
+      - ${PWD}/blackbox-exporter:/etc/blackbox_exporter
+    ports:
+      - "9115:9115"
+    networks:
+      - monitoring
+
+#  jenkins:
+#    image: jenkins/jenkins
+#    container_name: jenkins
+#    volumes:
+#      - ${PWD}/jenkins/data:/var/jenkins_home
+#    ports:
+#      - "8081:8080"
+#      - "50000:50000"
+#    networks:
+#      - monitoring
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ${PWD}/prometheus/data:/prometheus
+      - ${PWD}/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ${PWD}/prometheus/file_sd.yml:/etc/prometheus/file_sd.yml
+      - ${PWD}/prometheus/rules:/etc/prometheus/rules
+    ports:
+      - "9099:9090"
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    volumes:
+      - ${PWD}/grafana/data:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_USERS_ALLOW_SIGN_UP="false"
+      - GF_INSTALL_PLUGINS=grafana-kubernetes-app,grafana-clock-panel,grafana-simple-json-datasource,grafana-worldmap-panel
+    networks:
+      - monitoring
+#    logging:
+#      driver: loki
+#      options:
+#        loki-url: "http://host.docker.internal:3100/loki/api/v1/push"
+
+  loki:
+    image: "grafana/loki:${LOKI_TAG-latest}"
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - monitoring
+    volumes:
+      - "${PWD-.}/loki:/loki"
+    logging:
+      driver: loki
+      options:
+        loki-url: "http://host.docker.internal:3100/loki/api/v1/push"
+
+  promtail:
+    image: "grafana/promtail:${PROMT_TAG-latest}"
+    ports:
+      - "9080:9080"
+    volumes:
+      - /private/var/log:/var/log
+      - "${PWD-.}/promtail:/etc/promtail"
+    command: -config.file=/etc/promtail/docker-config.yaml
+    networks:
+      - monitoring
+    logging:
+      driver: loki
+      options:
+        loki-url: "http://host.docker.internal:3100/loki/api/v1/push"
+
+  influxdb:
+    image: "influxdb:${INFL_TAG-latest}"
+    ports:
+      - "8086:8086"
+    volumes:
+      - "${PWD-.}/influxdb/data:/var/lib/influxdb"
+    networks:
+      - monitoring
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.7.0
+    ports:
+      - "9200:9200"
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - "${PWD-.}/elasticsearch/data:/usr/share/elasticsearch/data"
+    networks:
+      - monitoring
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.7.0
+    volumes:
+      - "${PWD-.}/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf"
+      - "${PWD-.}/logstash/data:/data"
+
+  python-hello:
+    container_name: python-hello
+    build:
+      context: ../../instrumentation/services/python/helloworld
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+    networks:
+      - monitoring
+
+  go-hello:
+    container_name: go-hello
+    build:
+      context: ../../instrumentation/services/go/hello
+    ports:
+      - "8002:8000"
+    networks:
+      - monitoring
+
+  consul-agent-1: &consul-agent
+    image: consul:latest
+    networks:
+      - monitoring
+    command: "agent -retry-join consul-server-bootstrap -client 0.0.0.0"
+
+  consul-agent-2:
+    <<: *consul-agent
+
+  consul-agent-3:
+    <<: *consul-agent
+
+  consul-server-1: &consul-server
+    <<: *consul-agent
+    command: "agent -server -retry-join consul-server-bootstrap -client 0.0.0.0"
+
+  consul-server-2:
+    <<: *consul-server
+
+  consul-server-bootstrap:
+    <<: *consul-agent
+    ports:
+      - "8400:8400"
+      - "8500:8500"
+      - "8600:8600"
+      - "8600:8600/udp"
+    command: "agent -server -bootstrap-expect 3 -ui -client 0.0.0.0"
+
+networks:
+  monitoring:
+    name: monitoring

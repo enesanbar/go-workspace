@@ -1,0 +1,66 @@
+---
+    - hosts: all
+      become: yes
+    
+      tasks:
+        - name: Install epel-release (CentOS)
+          yum:
+            name: epel-release
+            state: present
+            update_cache: yes
+          when: ansible_distribution == "CentOS"
+    
+        - name: Install packages required by docker device mapper
+          yum:
+            name:
+              - yum-utils
+              - device-mapper-persistent-data
+              - lvm2
+            state: present
+    
+        - name: Add stable docker repository
+          command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+    
+        - name: Install docker and containerd
+          yum:
+            name:
+              - docker-ce
+              - docker-ce-cli
+              - containerd.io
+            state: present
+    
+        - name: Ensure docker service is started and enabled
+          service: 
+            name: docker
+            state: started
+            enabled: yes
+    
+        - name: Add user vagrant to docker group
+          user:
+            name: vagrant
+            groups: docker
+            append: yes
+    
+        - name: Install htop
+          package:
+            name: htop
+            state: present
+            update_cache: yes
+          when: ansible_distribution == "Ubuntu" or ansible_distribution == "CentOS"
+    
+        - name: Install yum packages
+          package:
+            name:
+              - tree
+              - vim-enhanced
+              - lynx # a text based browser
+              - wget
+              - nginx
+            state: present
+            update_cache: yes
+        
+        - name: Ensure nginx service is started and enabled
+          service: 
+            name: nginx
+            state: started
+            enabled: yes

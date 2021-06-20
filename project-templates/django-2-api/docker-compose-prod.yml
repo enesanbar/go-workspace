@@ -1,0 +1,79 @@
+version: '2'
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: compose/prod/django/Dockerfile
+    volumes:
+      - /app/
+    environment:
+      DJANGO_SETTINGS_MODULE: "config.settings.prod"
+    depends_on:
+      - postgres
+      - redis
+    container_name: "django_prod"
+    command: /start.sh
+
+  nginx:
+    image: nginx
+    ports:
+      - "80:8000"
+      - "443:443"
+    volumes_from:
+      - django
+    volumes:
+      - ./compose/prod/nginx/nginx.conf:/etc/nginx/conf.d/www.mysite.com.conf:ro
+    depends_on:
+      - django
+    container_name: "nginx_prod"
+
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    container_name: "postgres_prod"
+    environment:
+      POSTGRES_DB: mysite
+      POSTGRES_USER: mysite
+      POSTGRES_PASSWORD: password
+
+  redis:
+    image: redis
+    container_name: "redis_prod"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    container_name: "rabbitmq_prod"
+
+  celery-worker:
+    build:
+      context: .
+      dockerfile: compose/prod/django/Dockerfile
+    command: /start-celeryworker.sh
+    container_name: "worker_prod"
+
+  celery-beat:
+    build:
+      context: .
+      dockerfile: compose/prod/django/Dockerfile
+    command: /start-celerybeat.sh
+    container_name: "beat_prod"
+
+  flower:
+    build:
+      context: .
+      dockerfile: compose/prod/django/Dockerfile
+    command: /start-celeryflower.sh
+    ports:
+      - "5555:5555"
+    container_name: "flower_prod"
+
+  memcached:
+    image: memcached
+    ports:
+      - "11211:11211"
+    container_name: "memcached_prod"

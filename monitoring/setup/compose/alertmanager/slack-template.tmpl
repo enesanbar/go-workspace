@@ -1,0 +1,13 @@
+{{ define "slack.example.text" }}
+{{- $root := . -}}
+{{ range .Alerts }}
+ {{- $current := . -}}
+ *Alert:* {{ .Annotations.summary }} - `{{ .Labels.severity }}`
+ *Description:* {{ .Annotations.description }}
+ {{ with .Annotations.runbook_url }}*Runbook:* <{{ . }}|:spiral_note_pad:>{{ end }}
+ *Prometheus:* <{{ .GeneratorURL }}|:chart_with_upwards_trend:>
+ *Details:*
+   {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
+   {{ end }}
+{{ end }}
+{{ end }}

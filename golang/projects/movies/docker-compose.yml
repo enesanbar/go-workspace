@@ -1,0 +1,40 @@
+version: '3.4'
+
+services:
+  movies-backend:
+    build:
+      context: backend
+    ports:
+      - 4000:4000
+    # command: ["--host", "postgres", "--dbPort", "5432", "--dbUser", "postgres", "--password", "password", "--database", "postgres"]
+    entrypoint: ["/app"]
+    environment: 
+      GO_MOVIES_JWT: 2dce505d96a53c5768052ee90f3df2055657518dad489160df9913f66042e160
+    command: "--host postgres --dbPort 5432 --dbUser postgres --password password --database postgres"
+    depends_on: 
+      postgres:
+        condition: service_healthy
+  movies-frontend:
+    build:
+      context: frontend
+      args: 
+        - REACT_APP_API_URL=http://localhost:4000
+    ports:
+      - 8080:80
+    depends_on: 
+      - movies-backend
+  postgres:
+    image: postgres
+    restart: always
+    volumes:
+      - ${PWD}/backend/database/go_movies.sql:/docker-entrypoint-initdb.d/go_movies.sql
+    ports:
+      - "5431:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5

@@ -1,0 +1,5 @@
+Flask==2.1.2
+SQLAlchemy==1.4.39
+psycopg2==2.9.3
+pymongo
+gunicorn==20.1.0
