@@ -1,0 +1,3 @@
+injector
+SQLAlchemy==1.4.39
+redis==4.3.4
