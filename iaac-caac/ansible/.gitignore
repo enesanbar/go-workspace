@@ -1,6 +1,6 @@
 ### Vagrant template
 # General
-.vagrant/
+ansible-up-and-running/.vagrant/
 
 # Log files (if you are creating logs in debug mode, uncomment this)
 # *.log

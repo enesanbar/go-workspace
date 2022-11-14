@@ -15,7 +15,11 @@ resource "aws_security_group" "allow-ssh" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  tags = {
-    Name = "allow-ssh"
-  }
+
+  tags = merge(
+    {
+      "Name" = "${local.prefix}-allow-ssh"
+    },
+    local.common_tags,
+  )
 }

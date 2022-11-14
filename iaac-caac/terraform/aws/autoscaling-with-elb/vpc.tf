@@ -5,9 +5,12 @@ resource "aws_vpc" "main" {
   enable_dns_support   = "true"
   enable_dns_hostnames = "true"
   enable_classiclink   = "false"
-  tags = {
-    Name = "main"
-  }
+  tags = merge(
+    {
+      "Name" = "${local.prefix}-main"
+    },
+    local.common_tags,
+  )
 }
 
 # Subnets
@@ -17,9 +20,12 @@ resource "aws_subnet" "main-public-1" {
   map_public_ip_on_launch = "true"
   availability_zone       = "eu-west-1a"
 
-  tags = {
-    Name = "main-public-1"
-  }
+  tags = merge(
+    {
+      "Name" = "${local.prefix}-main-public-1"
+    },
+    local.common_tags,
+  )
 }
 
 resource "aws_subnet" "main-public-2" {
@@ -28,9 +34,12 @@ resource "aws_subnet" "main-public-2" {
   map_public_ip_on_launch = "true"
   availability_zone       = "eu-west-1b"
 
-  tags = {
-    Name = "main-public-2"
-  }
+  tags = merge(
+    {
+      "Name" = "${local.prefix}-main-public-2"
+    },
+    local.common_tags,
+  )
 }
 
 resource "aws_subnet" "main-public-3" {
@@ -39,9 +48,12 @@ resource "aws_subnet" "main-public-3" {
   map_public_ip_on_launch = "true"
   availability_zone       = "eu-west-1c"
 
-  tags = {
-    Name = "main-public-3"
-  }
+  tags = merge(
+    {
+      "Name" = "${local.prefix}-main-public-3"
+    },
+    local.common_tags,
+  )
 }
 
 resource "aws_subnet" "main-private-1" {
@@ -50,9 +62,12 @@ resource "aws_subnet" "main-private-1" {
   map_public_ip_on_launch = "false"
   availability_zone       = "eu-west-1a"
 
-  tags = {
-    Name = "main-private-1"
-  }
+  tags = merge(
+    {
+      "Name" = "${local.prefix}-main-private-1"
+    },
+    local.common_tags,
+  )
 }
 
 resource "aws_subnet" "main-private-2" {
@@ -61,9 +76,12 @@ resource "aws_subnet" "main-private-2" {
   map_public_ip_on_launch = "false"
   availability_zone       = "eu-west-1b"
 
-  tags = {
-    Name = "main-private-2"
-  }
+  tags = merge(
+    {
+      "Name" = "${local.prefix}-main-private-2"
+    },
+    local.common_tags,
+  )
 }
 
 resource "aws_subnet" "main-private-3" {
@@ -72,18 +90,25 @@ resource "aws_subnet" "main-private-3" {
   map_public_ip_on_launch = "false"
   availability_zone       = "eu-west-1c"
 
-  tags = {
-    Name = "main-private-3"
-  }
+  tags = merge(
+    {
+      "Name" = "${local.prefix}-main-private-3"
+    },
+    local.common_tags,
+  )
 }
 
 # Internet GW
 resource "aws_internet_gateway" "main-gw" {
   vpc_id = aws_vpc.main.id
 
-  tags = {
-    Name = "main"
-  }
+
+  tags = merge(
+    {
+      "Name" = "${local.prefix}-main"
+    },
+    local.common_tags,
+  )
 }
 
 # route tables
@@ -94,9 +119,12 @@ resource "aws_route_table" "main-public" {
     gateway_id = aws_internet_gateway.main-gw.id
   }
 
-  tags = {
-    Name = "main-public-1"
-  }
+  tags = merge(
+    {
+      "Name" = "${local.prefix}-main-public-1"
+    },
+    local.common_tags,
+  )
 }
 
 # route associations public

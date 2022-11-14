@@ -16,11 +16,24 @@ resource "aws_iam_role" "iam-read-only-role" {
 }
 EOF
 
+  tags = merge(
+    {
+      "Name" = "${local.prefix}-iam-read-only-role"
+    },
+    local.common_tags,
+  )
 }
 
 resource "aws_iam_instance_profile" "iam-read-only-role-instanceprofile" {
-  name = "iam-read-only-role"
+  name = "iam-read-only-instance-profile"
   role = aws_iam_role.iam-read-only-role.name
+
+  tags = merge(
+    {
+      "Name" = "${local.prefix}-iam-read-only-instance-profile"
+    },
+    local.common_tags,
+  )
 }
 
 resource "aws_iam_role_policy" "iam-read-only-role-policy" {

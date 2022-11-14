@@ -1,6 +1,17 @@
+data "aws_ami" "ubuntu" {
+  most_recent = true
+  owners      = ["099720109477"]
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
+  }
+}
+
+
 resource "aws_launch_configuration" "example-launchconfig" {
   name_prefix     = "example-launchconfig"
-  image_id        = lookup(var.AMIS, var.AWS_REGION, "")
+  image_id        = data.aws_ami.ubuntu.id
   instance_type   = "t2.micro"
   key_name        = aws_key_pair.mykeypair.key_name
   security_groups = [aws_security_group.myinstance.id]
@@ -21,9 +32,12 @@ resource "aws_autoscaling_group" "example-autoscaling" {
   load_balancers            = [aws_elb.my-elb.name]
   force_delete              = true
 
-  tag {
-    key                 = "Name"
-    value               = "ec2 instance"
-    propagate_at_launch = true
+  dynamic "tag" {
+    for_each = merge({ "Name" = "${local.prefix}-ec2 instance" }, local.common_tags)
+    content {
+      key                 = tag.key
+      value               = tag.value
+      propagate_at_launch = true
+    }
   }
 }

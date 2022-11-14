@@ -14,11 +14,10 @@ variable "PATH_TO_PUBLIC_KEY" {
   default = "../../keys/mykey.pub"
 }
 
-variable "AMIS" {
-  type = map(string)
-  default = {
-    us-east-1 = "ami-13be557e"
-    us-west-2 = "ami-06b94666"
-    eu-west-1 = "ami-844e0bf7"
-  }
+variable "project" {
+  default = "autoscaling-test"
+}
+
+variable "contact" {
+  default = "enesanbar@gmail.com"
 }

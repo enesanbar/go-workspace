@@ -6,5 +6,15 @@ terraform {
     }
   }
 
-  required_version = ">= 1.1.7"
+  required_version = ">= 1.2"
+}
+
+locals {
+  prefix = "${var.project}-${terraform.workspace}"
+  common_tags = {
+    Environment = terraform.workspace
+    Project     = var.project
+    Owner       = var.contact
+    ManagedBy   = "Terraform"
+  }
 }

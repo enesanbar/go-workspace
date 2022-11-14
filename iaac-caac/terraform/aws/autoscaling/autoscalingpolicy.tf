@@ -26,6 +26,13 @@ resource "aws_cloudwatch_metric_alarm" "example-cpu-alarm" {
 
   actions_enabled = true
   alarm_actions   = [aws_autoscaling_policy.example-cpu-policy.arn]
+
+  tags = merge(
+    {
+      "Name" = "${local.prefix}-cpu-policy-alarm"
+    },
+    local.common_tags,
+  )
 }
 
 # scale down alarm
@@ -55,4 +62,11 @@ resource "aws_cloudwatch_metric_alarm" "example-cpu-alarm-scaledown" {
 
   actions_enabled = true
   alarm_actions   = [aws_autoscaling_policy.example-cpu-policy-scaledown.arn]
+
+  tags = merge(
+    {
+      "Name" = "${local.prefix}-cpu-policy-alarm-scaledown"
+    },
+    local.common_tags,
+  )
 }
