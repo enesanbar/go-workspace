@@ -7,9 +7,3 @@ class Visits:
 
     def add(self, country, city):
         self.data[country].add(city)
-
-
-visits = Visits()
-visits.add('Spain', 'Santiago de Compostela')
-visits.add('Serbia', 'Belgrade')
-print(visits.data)
